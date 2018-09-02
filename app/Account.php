@@ -10,6 +10,7 @@ class Account extends Model
 
     /**
      * Get the budget that has this account.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function budget()
     {

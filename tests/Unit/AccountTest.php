@@ -5,7 +5,6 @@ namespace Tests\Unit;
 use App\Account;
 use App\Budget;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AccountTest extends TestCase

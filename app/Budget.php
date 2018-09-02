@@ -8,6 +8,7 @@ class Budget extends Model
 {
     /**
      * Get the accounts for the budget.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function accounts()
     {
