@@ -18,12 +18,12 @@ class AccountTest extends TestCase
     {
         // Create a new budget
         $budget = factory(Budget::class)->create([
-            'name' => 'My budget',
+            'name' => 'Budget of Tom',
         ]);
 
         // Create a new account
         $account = new Account([
-            'name' => 'My account'
+            'name' => 'Bank of Acme'
         ]);
 
         // Create a new account
@@ -32,6 +32,6 @@ class AccountTest extends TestCase
         );
 
         // Assert that the budget name is the same
-        $this->assertEquals('My budget', Account::first()->budget->name);
+        $this->assertEquals('Budget of Tom', Account::first()->budget->name);
     }
 }
