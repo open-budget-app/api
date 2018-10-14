@@ -14,7 +14,7 @@ class Account extends Model
      */
     public function budget()
     {
-        return $this->belongsTo('App\Budget');
+        return $this->belongsTo(Budget::class);
     }
 
 }
