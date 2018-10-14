@@ -15,7 +15,10 @@ class CreatePayeesTable extends Migration
     {
         Schema::create('payees', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('budget_id');
             $table->timestamps();
+
+            $table->foreign('budget_id')->references('id')->on('budgets');
         });
     }
 

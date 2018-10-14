@@ -15,8 +15,11 @@ class CreateCategoryGroupsTable extends Migration
     {
         Schema::create('category_groups', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('budget_id');
             $table->string('name');
             $table->timestamps();
+
+            $table->foreign('budget_id')->references('id')->on('budgets');
         });
     }
 
