@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payee extends Model
 {
-    //
+    /**
+     * Get the budget that belongs to this payee
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function budget()
+    {
+        return $this->belongsTo(Budget::class);
+    }
 }
