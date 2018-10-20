@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Budget;
+use App\Http\Requests\BudgetStoreRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BudgetController extends Controller
 {
@@ -14,18 +16,24 @@ class BudgetController extends Controller
      */
     public function index()
     {
-        //
+        return Auth::user()->budgets;
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param BudgetStoreRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BudgetStoreRequest $request)
     {
-        //
+        return Auth::user()
+            ->budgets()
+            ->save(
+                Budget::make(
+                    $request->validated()
+                )
+            );
     }
 
     /**
@@ -36,7 +44,12 @@ class BudgetController extends Controller
      */
     public function show(Budget $budget)
     {
-        //
+
+        if ($budget->user_id == Auth::id()) {
+            return $budget;
+        }
+
+        return response("Unauthorized", 403);
     }
 
     /**
