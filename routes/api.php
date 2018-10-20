@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,9 +16,15 @@ Route::post('login', 'UserController@login');
 Route::post('register', 'UserController@register');
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('details', 'UserController@details');
-});
-
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::apiResources([
+        'budgets' => 'BudgetController',
+        'accounts' => 'AccountController',
+        'category_budgets' => 'CategoryBudgetController',
+        'categories' => 'CategoryController',
+        'category_groups' => 'CategoryGroupController',
+        'payees' => 'PayeeController',
+        'recurring_transactions' => 'RecurringTransactionController',
+        'repeat_types' => 'RepeatTypeController',
+        'transactions' => 'TransactionController',
+    ]);
 });
