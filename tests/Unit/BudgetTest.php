@@ -14,7 +14,7 @@ class BudgetTest extends TestCase
     /**
      * @test
      */
-    public function a_budget_can_have_a_name()
+    public function a_budget_must_have_a_name()
     {
         $budget = new Budget;
         $budget->name = 'My Budget';
