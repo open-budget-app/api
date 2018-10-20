@@ -18,19 +18,9 @@ class PayeeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +31,7 @@ class PayeeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Payee  $payee
+     * @param  \App\Payee $payee
      * @return \Illuminate\Http\Response
      */
     public function show(Payee $payee)
@@ -50,21 +40,10 @@ class PayeeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Payee  $payee
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Payee $payee)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Payee  $payee
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Payee $payee
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Payee $payee)
@@ -75,7 +54,7 @@ class PayeeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Payee  $payee
+     * @param  \App\Payee $payee
      * @return \Illuminate\Http\Response
      */
     public function destroy(Payee $payee)

@@ -18,19 +18,9 @@ class CategoryBudgetController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +31,7 @@ class CategoryBudgetController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\CategoryBudget  $categoryBudget
+     * @param  \App\CategoryBudget $categoryBudget
      * @return \Illuminate\Http\Response
      */
     public function show(CategoryBudget $categoryBudget)
@@ -50,21 +40,10 @@ class CategoryBudgetController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\CategoryBudget  $categoryBudget
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(CategoryBudget $categoryBudget)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\CategoryBudget  $categoryBudget
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\CategoryBudget $categoryBudget
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, CategoryBudget $categoryBudget)
@@ -75,7 +54,7 @@ class CategoryBudgetController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\CategoryBudget  $categoryBudget
+     * @param  \App\CategoryBudget $categoryBudget
      * @return \Illuminate\Http\Response
      */
     public function destroy(CategoryBudget $categoryBudget)

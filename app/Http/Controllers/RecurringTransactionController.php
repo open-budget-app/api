@@ -18,19 +18,9 @@ class RecurringTransactionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +31,7 @@ class RecurringTransactionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\RecurringTransaction  $recurringTransaction
+     * @param  \App\RecurringTransaction $recurringTransaction
      * @return \Illuminate\Http\Response
      */
     public function show(RecurringTransaction $recurringTransaction)
@@ -50,21 +40,10 @@ class RecurringTransactionController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\RecurringTransaction  $recurringTransaction
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(RecurringTransaction $recurringTransaction)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RecurringTransaction  $recurringTransaction
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\RecurringTransaction $recurringTransaction
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, RecurringTransaction $recurringTransaction)
@@ -75,7 +54,7 @@ class RecurringTransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\RecurringTransaction  $recurringTransaction
+     * @param  \App\RecurringTransaction $recurringTransaction
      * @return \Illuminate\Http\Response
      */
     public function destroy(RecurringTransaction $recurringTransaction)
