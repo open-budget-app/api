@@ -71,6 +71,10 @@ class AccountTest extends TestCase
         $collection = collect(json_decode($response->getContent()));
         $response->assertStatus(201);
         $this->assertNotEmpty($collection);
+        $this->assertDatabaseHas('accounts', [
+            'name' => 'This is a test Account.',
+            'budget_id' => 1,
+        ]);
     }
 
     /**
@@ -89,6 +93,21 @@ class AccountTest extends TestCase
 
         $response->assertStatus(200);
         $this->assertTrue($updatedAccount->name == 'I\'ve been updated.');
+    }
+
+    /**
+     * @test
+     */
+    public function an_account_can_be_delete_by_its_owner()
+    {
+        Passport::actingAs($this->user);
+
+        $response = $this->json('DELETE', $this->baseEndpoint . '1');
+
+        $response->assertStatus(200);
+        $this->assertDatabaseMissing('accounts', [
+            'budget_id' => 1,
+        ]);
     }
 
 }

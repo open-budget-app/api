@@ -72,8 +72,10 @@ class AccountController extends Controller
      * @param  \App\Account $account
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Account $account)
+    public function destroy(Budget $budget, Account $account)
     {
-        //
+        Auth::user()->budgets()->findOrFail($budget->id);
+        $account->delete();
+        return response(['message' => 'Account deleted.'], 200);
     }
 }
