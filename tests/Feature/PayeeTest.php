@@ -95,4 +95,20 @@ class PayeeTest extends TestCase
         $response->assertStatus(200);
         $this->assertTrue($updatedAccount->name == 'I\'ve been updated.');
     }
+
+    /**
+     * @test
+     */
+    public function a_payee_can_be_delete_by_its_owner()
+    {
+        Passport::actingAs($this->user);
+        $payee = Payee::find(1);
+        $response = $this->json('DELETE', $this->baseEndpoint . $payee->id);
+
+        $response->assertStatus(200);
+        $this->assertDatabaseMissing('payees', [
+            'budget_id' => 1,
+            'name' => $payee->name
+        ]);
+    }
 }

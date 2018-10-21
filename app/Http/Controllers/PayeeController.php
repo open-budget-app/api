@@ -74,8 +74,11 @@ class PayeeController extends Controller
      * @param  \App\Payee $payee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Payee $payee)
+    public function destroy(Budget $budget, Payee $payee)
     {
-        //
+        Auth::user()->budgets()->findOrFail($budget->id);
+        $budget->payees()->findOrFail($payee->id);
+        $payee->delete();
+        return response(['message' => 'Payee deleted.'], 200);
     }
 }
