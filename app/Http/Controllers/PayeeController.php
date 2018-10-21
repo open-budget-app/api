@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Payee;
 use App\Budget;
+use App\Account;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PayeeStoreRequest;
@@ -32,11 +33,18 @@ class PayeeController extends Controller
     public function store(PayeeStoreRequest $request, Budget $budget)
     {
         Auth::user()->budgets()->findOrFail($budget->id);
+        $data = $request->validated();
+
+        if (array_has($request->validated(), 'account_id')) {
+            $name = Account::find($request->validated()['account_id'])->name;
+            $data = array_add($request->validated(), 'name' , $name);
+        }
+        
         return $budget
             ->payees()
             ->save(
                 Payee::make(
-                    $request->validated()
+                    $data
                 )
             );
     }

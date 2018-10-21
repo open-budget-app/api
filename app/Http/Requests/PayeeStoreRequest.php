@@ -28,7 +28,7 @@ class PayeeStoreRequest extends FormRequest
         return [
             'account_id' => 'sometimes|exists:accounts,id',
             'name' => [
-                'required',
+                'required_if:account_id,null',
                 Rule::unique('payees')->where(function ($query) {
                     return $query->where([
                         'budget_id' => $this->route('budget')->id,

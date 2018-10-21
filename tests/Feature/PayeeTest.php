@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Payee;
 use App\Budget;
+use App\Account;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Passport\Passport;
@@ -94,6 +95,24 @@ class PayeeTest extends TestCase
 
         $response->assertStatus(200);
         $this->assertTrue($updatedAccount->name == 'I\'ve been updated.');
+    }
+
+    /**
+     * @test
+     */
+    public function a_payee_can_be_linked_to_account_of_owner()
+    {
+        Passport::actingAs($this->user);
+
+        $account = $this->budget->accounts()->save(factory(Account::class)->create());
+
+        $data = [
+          'account_id' => $account->id
+        ];
+
+        $response = $this->json('POST', $this->baseEndpoint, $data);
+        $payee = Payee::find(json_decode($response->getContent())->id);
+        $this->assertTrue($payee->name === $account->name);
     }
 
     /**
