@@ -63,6 +63,7 @@ class AccountController extends Controller
     public function update(AccountUpdateRequest $request, Budget $budget, Account $account)
     {
         Auth::user()->budgets()->findOrFail($budget->id);
+        $budget->accounts()->findOrFail($account->id);
         $account->update($request->validated());
         return $account;
     }

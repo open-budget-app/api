@@ -77,4 +77,22 @@ class PayeeTest extends TestCase
             'budget_id' => 1,
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function a_payee_can_be_updated_by_its_owner()
+    {
+        Passport::actingAs($this->user);
+
+        $data = [
+          'name' => 'I\'ve been updated.'
+        ];
+
+        $response = $this->json('PUT', $this->baseEndpoint . '1', $data);
+        $updatedAccount = json_decode($response->getContent());
+
+        $response->assertStatus(200);
+        $this->assertTrue($updatedAccount->name == 'I\'ve been updated.');
+    }
 }

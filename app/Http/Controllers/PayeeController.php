@@ -7,6 +7,7 @@ use App\Budget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PayeeStoreRequest;
+use App\Http\Requests\PayeeUpdateRequest;
 
 class PayeeController extends Controller
 {
@@ -55,13 +56,16 @@ class PayeeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Http\Requests\PayeeUpdateRequest $request
      * @param  \App\Payee $payee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Payee $payee)
+    public function update(PayeeUpdateRequest $request, Budget $budget, Payee $payee)
     {
-        //
+        Auth::user()->budgets()->findOrFail($budget->id);
+        $budget->payees()->findOrFail($payee->id);
+        $payee->update($request->validated());
+        return $payee;
     }
 
     /**
