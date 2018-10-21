@@ -55,4 +55,26 @@ class PayeeTest extends TestCase
         $response->assertStatus(200);
         $this->assertNotEmpty($collection);
     }
+
+    /**
+     * @test
+     */
+    public function a_payee_can_be_created_by_a_user()
+    {
+        Passport::actingAs($this->user);
+
+        $data = [
+          'name' => 'I\'m a test Payee!'
+        ];
+
+        $response = $this->json('POST', $this->baseEndpoint, $data);
+        $collection = collect(json_decode($response->getContent()));
+
+        $response->assertStatus(201);
+        $this->assertNotEmpty($collection);
+        $this->assertDatabaseHas('payees', [
+            'name' => 'I\'m a test Payee!',
+            'budget_id' => 1,
+        ]);
+    }
 }

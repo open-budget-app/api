@@ -6,6 +6,7 @@ use App\Payee;
 use App\Budget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PayeeStoreRequest;
 
 class PayeeController extends Controller
 {
@@ -23,12 +24,20 @@ class PayeeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Http\Requests\PayeeStoreRequest $request
+     * @param  \App\Budget $budget
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PayeeStoreRequest $request, Budget $budget)
     {
-        //
+        Auth::user()->budgets()->findOrFail($budget->id);
+        return $budget
+            ->payees()
+            ->save(
+                Payee::make(
+                    $request->validated()
+                )
+            );
     }
 
     /**

@@ -31,6 +31,7 @@ class AccountController extends Controller
      */
     public function store(AccountStoreRequest $request, Budget $budget)
     {
+        Auth::user()->budgets()->findOrFail($budget->id);
         return $budget
             ->accounts()
             ->save(
