@@ -30,9 +30,7 @@ class BudgetTest extends TestCase
      */
     public function all_budgets_can_be_retrieved_by_a_owner()
     {
-        Passport::actingAs(
-            $this->user
-        );
+        Passport::actingAs($this->user);
 
         $response = $this->json('GET', '/api/budgets');
         $collection = collect(json_decode($response->getContent()));
@@ -47,15 +45,11 @@ class BudgetTest extends TestCase
      */
     public function a_budget_can_be_created_by_a_user()
     {
-        Passport::actingAs(
-            $this->user
-        );
+        Passport::actingAs($this->user);
 
         $response = $this->json('POST', '/api/budgets', [
             'name' => 'My budget',
         ]);
-
-//        dd($response);
 
         $response->assertStatus(201);
         $this->assertDatabaseHas('budgets', [
@@ -69,9 +63,7 @@ class BudgetTest extends TestCase
      */
     public function a_budget_can_be_retrieved_by_an_owner()
     {
-        Passport::actingAs(
-            $this->user
-        );
+        Passport::actingAs($this->user);
 
         $response = $this->json('GET', '/api/budgets/' . $this->user->budgets->first()->id);
         $collection = collect(json_decode($response->getContent()));
@@ -81,23 +73,88 @@ class BudgetTest extends TestCase
 
     }
 
-
     /**
      * @test
      */
     public function a_budget_can_only_retrieved_by_its_owner()
     {
-        Passport::actingAs(
-            $this->user
-        );
+        Passport::actingAs($this->user);
 
-        $budget = factory(Budget::class)->create();
+        $budgetNotOwnedByUser = factory(Budget::class)->create();
 
-        $response = $this->json('GET', '/api/budgets/' . $budget->id);
-
-        $response->assertStatus(403);
+        $response = $this->json('GET', '/api/budgets/' . $budgetNotOwnedByUser->id);
+        $response->assertStatus(404);
 
     }
 
+    /**
+     * @test
+     */
+    public function a_budget_can_be_updated_by_its_owner()
+    {
+        Passport::actingAs($this->user);
 
+        $budget = $this->user->budgets()->first();
+
+        $response = $this->json('PUT', '/api/budgets/' . $budget->id, [
+            'name' => 'New budget name'
+        ]);
+
+        $updatedBudget = $this->user->budgets()->first();
+
+
+        $response->assertStatus(200);
+        $this->assertContains('New budget name', $response->getContent());
+        $this->assertTrue($updatedBudget->name == 'New budget name');
+    }
+
+    /**
+     * @test
+     */
+    public function a_budget_can_only_be_updated_by_its_owner()
+    {
+        Passport::actingAs($this->user);
+
+        $budgetNotOwnedByUser = factory(Budget::class)->create();
+
+        $response = $this->json('PUT', '/api/budgets/' . $budgetNotOwnedByUser->id, [
+            'name' => 'New budget name'
+        ]);
+
+        $response->assertStatus(404);
+    }
+
+    /**
+     * @test
+     */
+    public function a_budget_can_be_delete_by_its_owner()
+    {
+        Passport::actingAs($this->user);
+
+        $budget = $this->user->budgets()->first();
+
+        $response = $this->json('DELETE', '/api/budgets/' . $budget->id);
+
+        $response->assertStatus(200);
+        $this->assertDatabaseMissing('budgets', [
+            'id' => $budget->id,
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function a_budget_can_only_be_delete_by_its_owner()
+    {
+        Passport::actingAs($this->user);
+
+        $budgetNotOwnedByUser = factory(Budget::class)->create();
+
+        $response = $this->json('DELETE', '/api/budgets/' . $budgetNotOwnedByUser->id);
+
+        $response->assertStatus(404);
+        $this->assertDatabaseHas('budgets', [
+            'id' => $budgetNotOwnedByUser->id,
+        ]);
+    }
 }

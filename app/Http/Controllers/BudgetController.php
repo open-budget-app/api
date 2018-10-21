@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Budget;
 use App\Http\Requests\BudgetStoreRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\BudgetUpdateRequest;
 use Illuminate\Support\Facades\Auth;
 
 class BudgetController extends Controller
@@ -44,24 +44,23 @@ class BudgetController extends Controller
      */
     public function show(Budget $budget)
     {
-
-        if ($budget->user_id == Auth::id()) {
-            return $budget;
-        }
-
-        return response("Unauthorized", 403);
+        return Auth::user()->budgets()->findOrFail($budget->id);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param BudgetUpdateRequest $request
      * @param  \App\Budget $budget
-     * @return \Illuminate\Http\Response
+     * @return Budget
      */
-    public function update(Request $request, Budget $budget)
+    public function update(BudgetUpdateRequest $request, Budget $budget)
     {
-        //
+        Auth::user()->budgets()->findOrFail($budget->id);
+
+        $budget->update($request->validated());
+
+        return $budget;
     }
 
     /**
@@ -69,9 +68,14 @@ class BudgetController extends Controller
      *
      * @param  \App\Budget $budget
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Budget $budget)
     {
-        //
+        Auth::user()->budgets()->findOrFail($budget->id);
+
+        $budget->delete();
+
+        return response(['message' => 'Budget deleted'], 200);
     }
 }
