@@ -7,6 +7,7 @@ use App\Budget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AccountStoreRequest;
+use App\Http\Requests\AccountUpdateRequest;
 
 class AccountController extends Controller
 {
@@ -54,13 +55,15 @@ class AccountController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Http\Requests\AccountUpdateRequest $request
      * @param  \App\Account $account
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Account $account)
+    public function update(AccountUpdateRequest $request, Budget $budget, Account $account)
     {
-        //
+        Auth::user()->budgets()->findOrFail($budget->id);
+        $account->update($request->validated());
+        return $account;
     }
 
     /**
