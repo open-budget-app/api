@@ -42,4 +42,18 @@ class AccountTest extends TestCase
         $this->assertEquals(1, $collection->count());
     }
 
+    /**
+     * @test
+     */
+    public function an_account_can_be_retrieved_by_its_owner()
+    {
+      Passport::actingAs($this->user);
+
+      $response = $this->json('GET', $this->baseEndpoint . '1');
+      $collection = collect(json_decode($response->getContent()));
+
+      $response->assertStatus(200);
+      $this->assertNotEmpty($collection);
+    }
+
 }

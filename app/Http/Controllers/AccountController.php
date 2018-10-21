@@ -37,9 +37,10 @@ class AccountController extends Controller
      * @param  \App\Account $account
      * @return \Illuminate\Http\Response
      */
-    public function show(Account $account)
+    public function show(Budget $budget, Account $account)
     {
-        //
+        Auth::user()->budgets()->findOrFail($budget->id);
+        return $account;
     }
 
     /**
