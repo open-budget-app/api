@@ -17,6 +17,7 @@ class BudgetTest extends TestCase
     public function a_budget_must_have_a_name()
     {
         $budget = new Budget;
+        $budget->user_id = 1;
         $budget->name = 'My Budget';
         $budget->save();
 
