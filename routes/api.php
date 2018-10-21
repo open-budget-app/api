@@ -18,7 +18,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('details', 'UserController@details');
     Route::apiResources([
         'budgets' => 'BudgetController',
-        'accounts' => 'AccountController',
+        'budgets/{id}/accounts' => 'AccountController',
         'category_budgets' => 'CategoryBudgetController',
         'categories' => 'CategoryController',
         'category_groups' => 'CategoryGroupController',
