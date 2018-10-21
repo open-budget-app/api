@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Payee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PayeeController extends Controller
 {
@@ -12,9 +13,10 @@ class PayeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($budgetId)
     {
-        //
+        $budget = Auth::user()->budgets()->findOrFail($budgetId);
+        return $budget->payees;
     }
 
     /**
