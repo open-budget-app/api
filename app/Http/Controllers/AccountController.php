@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Account;
 use App\Budget;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AccountStoreRequest;
 use App\Http\Requests\AccountUpdateRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param $budgetId
      * @return \Illuminate\Http\Response
      */
     public function index($budgetId)
@@ -27,7 +27,7 @@ class AccountController extends Controller
      *
      * @param  \App\Http\Requests\AccountStoreRequest $request
      * @param  \App\Budget $budget
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function store(AccountStoreRequest $request, Budget $budget)
     {
@@ -44,8 +44,9 @@ class AccountController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param Budget $budget
      * @param  \App\Account $account
-     * @return \Illuminate\Http\Response
+     * @return Account
      */
     public function show(Budget $budget, Account $account)
     {
@@ -57,8 +58,9 @@ class AccountController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\AccountUpdateRequest $request
+     * @param Budget $budget
      * @param  \App\Account $account
-     * @return \Illuminate\Http\Response
+     * @return Account
      */
     public function update(AccountUpdateRequest $request, Budget $budget, Account $account)
     {
@@ -71,8 +73,10 @@ class AccountController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param Budget $budget
      * @param  \App\Account $account
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Budget $budget, Account $account)
     {
