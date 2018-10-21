@@ -47,13 +47,30 @@ class AccountTest extends TestCase
      */
     public function an_account_can_be_retrieved_by_its_owner()
     {
-      Passport::actingAs($this->user);
+        Passport::actingAs($this->user);
 
-      $response = $this->json('GET', $this->baseEndpoint . '1');
-      $collection = collect(json_decode($response->getContent()));
+        $response = $this->json('GET', $this->baseEndpoint . '1');
+        $collection = collect(json_decode($response->getContent()));
 
-      $response->assertStatus(200);
-      $this->assertNotEmpty($collection);
+        $response->assertStatus(200);
+        $this->assertNotEmpty($collection);
+    }
+
+    /**
+     * @test
+     */
+    public function an_account_can_be_created_by_a_user()
+    {
+        Passport::actingAs($this->user);
+        
+        $data = [
+          'name' => 'This is a test Budget.'
+        ];
+
+        $response = $this->json('POST', $this->baseEndpoint, $data);
+        $collection = collect(json_decode($response->getContent()));
+        $response->assertStatus(201);
+        $this->assertNotEmpty($collection);
     }
 
 }

@@ -6,6 +6,7 @@ use App\Account;
 use App\Budget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AccountStoreRequest;
 
 class AccountController extends Controller
 {
@@ -23,12 +24,19 @@ class AccountController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Http\Requests\AccountStoreRequest $request
+     * @param  \App\Budget $budget
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AccountStoreRequest $request, Budget $budget)
     {
-        //
+        return $budget
+            ->accounts()
+            ->save(
+                Account::make(
+                    $request->validated()
+                )
+            );
     }
 
     /**
