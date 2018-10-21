@@ -15,10 +15,14 @@ class CreatePayeesTable extends Migration
     {
         Schema::create('payees', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('budget_id');
-            $table->timestamps();
+            $table->string('name')->nullable();
 
+            $table->unsignedInteger('account_id')->nullable();
+            $table->foreign('account_id')->references('id')->on('accounts');
+
+            $table->unsignedInteger('budget_id');
             $table->foreign('budget_id')->references('id')->on('budgets');
+            $table->timestamps();
         });
     }
 

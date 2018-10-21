@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payee extends Model
 {
+    protected $guarded = ['id'];
+
     /**
      * Get the budget that belongs to this payee
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
