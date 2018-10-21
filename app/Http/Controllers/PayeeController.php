@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Payee;
+use App\Budget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,9 +37,10 @@ class PayeeController extends Controller
      * @param  \App\Payee $payee
      * @return \Illuminate\Http\Response
      */
-    public function show(Payee $payee)
+    public function show(Budget $budget, Payee $payee)
     {
-        //
+        Auth::user()->budgets()->findOrFail($budget->id);
+        return $payee;
     }
 
     /**
