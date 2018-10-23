@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class CategoryGroup extends Model
 {
+    protected $guarded = ['id'];
+
     /**
      * Get all the categories of a category group
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
