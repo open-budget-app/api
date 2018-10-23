@@ -33,6 +33,11 @@ class Budget extends Model
         return $this->hasMany(CategoryGroup::class);
     }
 
+    public function categories()
+    {
+        return $this->hasManyThrough('App\Category', 'App\CategoryGroup');
+    }
+
     /**
      * Get the payees for the budget.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
