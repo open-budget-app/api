@@ -8,12 +8,15 @@ use App\Budget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CategoryStoreRequest;
+use App\Http\Requests\CategoryUpdateRequest;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param  \App\Budget $budget
+     * @param  \App\CategoryGroup $categoryGroup
      * @return \Illuminate\Http\Response
      */
     public function index(Budget $budget, CategoryGroup $categoryGroup)
@@ -27,6 +30,8 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\CategoryStoreRequest $request
+     * @param  \App\Budget $budget
+     * @param  \App\CategoryGroup $categoryGroup
      * @return \Illuminate\Http\Response
      */
     public function store(CategoryStoreRequest $request, Budget $budget, CategoryGroup $categoryGroup)
@@ -34,7 +39,7 @@ class CategoryController extends Controller
         Auth::user()->budgets()->findOrFail($budget->id);
         $budget->categoryGroups()->findOrFail($categoryGroup->id);
 
-        return $budget
+        return $categoryGroup
             ->categories()
             ->save(
                 Category::make(
@@ -46,6 +51,8 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param  \App\Budget $budget
+     * @param  \App\CategoryGroup $categoryGroup
      * @param  \App\Category $category
      * @return \Illuminate\Http\Response
      */
@@ -60,23 +67,35 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Http\Requests\CategoryUpdateRequest $request
+     * @param  \App\Budget $budget
+     * @param  \App\CategoryGroup $categoryGroup
      * @param  \App\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryUpdateRequest $request, Budget $budget, CategoryGroup $categoryGroup, Category $category)
     {
-        //
+        Auth::user()->budgets()->findOrFail($budget->id);
+        $budget->categoryGroups()->findOrFail($categoryGroup->id);
+        $budget->categories()->findOrFail($category->id);
+        $category->update($request->validated());
+        return $category;
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \App\Budget $budget
+     * @param  \App\CategoryGroup $categoryGroup
      * @param  \App\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Budget $budget, CategoryGroup $categoryGroup, Category $category)
     {
-        //
+      Auth::user()->budgets()->findOrFail($budget->id);
+      $budget->categoryGroups()->findOrFail($categoryGroup->id);
+      $budget->categories()->findOrFail($category->id);
+      $category->delete();
+      return response(['message' => 'Category deleted.'], 200);
     }
 }

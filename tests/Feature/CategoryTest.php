@@ -71,7 +71,7 @@ class CategoryTest extends TestCase
 
         $response = $this->json('POST', $this->baseEndpoint, $data);
         $collection = collect(json_decode($response->getContent()));
-        dd($response);
+
         $response->assertStatus(201);
         $this->assertNotEmpty($collection);
         $this->assertDatabaseHas('categories', [
@@ -79,38 +79,38 @@ class CategoryTest extends TestCase
             'category_group_id' => 1,
         ]);
     }
-    //
-    // /**
-    //  * @test
-    //  */
-    // public function a_category_can_be_updated_by_its_owner()
-    // {
-    //     Passport::actingAs($this->user);
-    //
-    //     $data = [
-    //       'name' => 'I\'ve been updated.'
-    //     ];
-    //
-    //     $response = $this->json('PUT', $this->baseEndpoint . '1', $data);
-    //     $updatedAccount = json_decode($response->getContent());
-    //
-    //     $response->assertStatus(200);
-    //     $this->assertTrue($updatedAccount->name == 'I\'ve been updated.');
-    // }
-    //
-    // /**
-    //  * @test
-    //  */
-    // public function a_category_can_be_delete_by_its_owner()
-    // {
-    //     Passport::actingAs($this->user);
-    //     $payee = Category::find(1);
-    //     $response = $this->json('DELETE', $this->baseEndpoint . $payee->id);
-    //
-    //     $response->assertStatus(200);
-    //     $this->assertDatabaseMissing('categories', [
-    //         'category_group_id' => 1,
-    //         'name' => $payee->name
-    //     ]);
-    // }
+
+    /**
+     * @test
+     */
+    public function a_category_can_be_updated_by_its_owner()
+    {
+        Passport::actingAs($this->user);
+
+        $data = [
+          'name' => 'I\'ve been updated.'
+        ];
+
+        $response = $this->json('PUT', $this->baseEndpoint . '1', $data);
+        $updatedAccount = json_decode($response->getContent());
+
+        $response->assertStatus(200);
+        $this->assertTrue($updatedAccount->name == 'I\'ve been updated.');
+    }
+
+    /**
+     * @test
+     */
+    public function a_category_can_be_delete_by_its_owner()
+    {
+        Passport::actingAs($this->user);
+        $payee = Category::find(1);
+        $response = $this->json('DELETE', $this->baseEndpoint . $payee->id);
+
+        $response->assertStatus(200);
+        $this->assertDatabaseMissing('categories', [
+            'category_group_id' => 1,
+            'name' => $payee->name
+        ]);
+    }
 }
