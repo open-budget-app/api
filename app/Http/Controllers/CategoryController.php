@@ -12,9 +12,11 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Budget $budget, CategoryGroup $categoryGroup)
     {
-        //
+        Auth::user()->budgets()->findOrFail($budget->id);
+        $budget->categoryGroups()->findOrFail($categoryGroup->id);
+        return $budget->categories;
     }
 
     /**
