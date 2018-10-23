@@ -43,42 +43,42 @@ class CategoryTest extends TestCase
         $response->assertStatus(200);
         $this->assertEquals(5, $collection->count());
     }
-    //
-    // /**
-    //  * @test
-    //  */
-    // public function a_category_can_be_retrieved_by_its_owner()
-    // {
-    //     Passport::actingAs($this->user);
-    //
-    //     $response = $this->json('GET', $this->baseEndpoint . '1');
-    //     $collection = collect(json_decode($response->getContent()));
-    //
-    //     $response->assertStatus(200);
-    //     $this->assertNotEmpty($collection);
-    // }
-    //
-    // /**
-    //  * @test
-    //  */
-    // public function a_category_can_be_created_by_a_user()
-    // {
-    //     Passport::actingAs($this->user);
-    //
-    //     $data = [
-    //       'name' => 'I\'m a test Category!'
-    //     ];
-    //
-    //     $response = $this->json('POST', $this->baseEndpoint, $data);
-    //     $collection = collect(json_decode($response->getContent()));
-    //
-    //     $response->assertStatus(201);
-    //     $this->assertNotEmpty($collection);
-    //     $this->assertDatabaseHas('categories', [
-    //         'name' => 'I\'m a test Category!',
-    //         'category_group_id' => 1,
-    //     ]);
-    // }
+
+    /**
+     * @test
+     */
+    public function a_category_can_be_retrieved_by_its_owner()
+    {
+        Passport::actingAs($this->user);
+
+        $response = $this->json('GET', $this->baseEndpoint . '1');
+        $collection = collect(json_decode($response->getContent()));
+
+        $response->assertStatus(200);
+        $this->assertNotEmpty($collection);
+    }
+
+    /**
+     * @test
+     */
+    public function a_category_can_be_created_by_a_user()
+    {
+        Passport::actingAs($this->user);
+
+        $data = [
+          'name' => 'I\'m a test Category!'
+        ];
+
+        $response = $this->json('POST', $this->baseEndpoint, $data);
+        $collection = collect(json_decode($response->getContent()));
+        dd($response);
+        $response->assertStatus(201);
+        $this->assertNotEmpty($collection);
+        $this->assertDatabaseHas('categories', [
+            'name' => 'I\'m a test Category!',
+            'category_group_id' => 1,
+        ]);
+    }
     //
     // /**
     //  * @test
