@@ -3,23 +3,9 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Category::class, function (Faker $faker) {
+    $suffix = array_rand([' maintenance', ' bill', ' insurance']);
     return [
-        'name' => $faker->unique()->randomElement([
-            'Rent',
-            'Internet',
-            'Groceries',
-            'Electricity Bill',
-            'Tap Water Bill',
-            'Electronics',
-            'Car Maintenance',
-            'Home Maintenance',
-            'House Insurance',
-            'Medical Insurance',
-            'Clothing',
-            'Software Subscriptions',
-            'Holidays',
-            'Presents',
-            'Home decoration',
-        ])
+        'category_group_id' => factory(\App\CategoryGroup::class)->create()->id,
+        'name' =>  $faker->domainword . $suffix
     ];
 });
