@@ -18,4 +18,13 @@ class Category extends Model
     {
         return $this->belongsTo(CategoryGroup::class);
     }
+
+    /**
+     * Get the category budgets that this category has
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function categoryBudgets()
+    {
+        return $this->hasMany(CategoryBudget::class);
+    }
 }

@@ -19,7 +19,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResources([
         'budgets' => 'BudgetController',
         'budgets/{budget}/accounts' => 'AccountController',
-        'category_budgets' => 'CategoryBudgetController',
+        'budgets/{budget}/category_groups/{categoryGroup}/categories/{category}/category_budgets' => 'CategoryBudgetController',
         'budgets/{budget}/category_groups/{categoryGroup}/categories' => 'CategoryController',
         'budgets/{budget}/category_groups' => 'CategoryGroupController',
         'budgets/{budget}/payees' => 'PayeeController',
