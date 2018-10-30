@@ -8,7 +8,7 @@ Found at [www.openbudget.app](https://openbudget.app), Open Budget App is an ope
 
 ## Technical assets
 
-We have yet to describe all the functionalities, so at least for now the technical assets is limited to:
+We have yet to describe all the functionalities, so at least for now the technical assets are limited.
 
 ### Database structure
 
