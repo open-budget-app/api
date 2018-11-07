@@ -15,6 +15,12 @@ class CreateCategoryBudgetsTable extends Migration
     {
         Schema::create('category_budgets', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('amount');
+            $table->dateTime('year_month');
+
+            $table->unsignedInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
+
             $table->timestamps();
         });
     }

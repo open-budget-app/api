@@ -2,19 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Budget;
+use App\Category;
 use App\CategoryBudget;
+use App\CategoryGroup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryBudgetController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param  \App\Budget $budget
+     * @param  \App\CategoryGroup $categoryGroup
+     * @param  \App\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Budget $budget, CategoryGroup $categoryGroup, Category $category)
     {
-        //
+        Auth::user()->budgets()->findOrFail($budget->id);
+        $budget->categoryGroups()->findOrFail($categoryGroup->id);
+        $categoryGroup->categories()->findOrFail($category->id);
+        return $category->categoryBudgets;
     }
 
     /**
